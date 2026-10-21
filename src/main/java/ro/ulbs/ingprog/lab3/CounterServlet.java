@@ -13,12 +13,14 @@ public class CounterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
         Integer counterGet = (Integer)
                 request.getSession().getAttribute("CounterGetName");
+
         if (counterGet == null) {
             counterGet = 0;
         }
+
+
         String increment = request.getParameter("inc");
         if (increment != null) {
             counterGet ++;
