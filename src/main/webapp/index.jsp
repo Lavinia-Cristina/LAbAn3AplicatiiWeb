@@ -7,12 +7,30 @@
 <body>
 <h1><%= "Hello World!" %>
 </h1>
-<a href="CounterServlet?inc=1">CounterServlet GET</a>
-<a href="CounterServlet?dec=1">CounterServlet DECREMENT GET</a>
-<form action="CounterServlet" method="POST">
-    <br>inc: <input type="text" name="inc" value="1">
-    <br>dec: <input type="text" name="dec" value="1">
-    <br><input type="submit" value="CounterServlet POST">
+
+<form action="CounterServlet" method="GET">
+    inc: <input type="text" name="inc" value="1">
+    <input type="submit" value="CounterServlet GET inc">
 </form>
+
+<form action="CounterServlet" method="GET">
+     dec: <input type="text" name="dec" value="1">
+    <input type="submit" value="CounterServlet GET dec">
+</form>
+
+<br>
+
+    <form action="CounterServlet" method="POST">
+        <br>inc: <input type="text" name="inc" value="1">
+        <input type="submit" value="CounterServlet POST inc">
+    </form>
+
+
+    <form action="CounterServlet" method="POST">
+        dec: <input type="text" name="dec" value="1">
+        <input type="submit" value="CounterServlet POST dec">
+    </form>
+
+
 </body>
 </html>

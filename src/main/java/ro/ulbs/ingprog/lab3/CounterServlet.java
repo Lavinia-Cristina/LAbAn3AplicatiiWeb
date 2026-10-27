@@ -16,15 +16,7 @@ public class CounterServlet extends HttpServlet {
         Integer counterGet = (Integer)
                 request.getSession().getAttribute("CounterGetName");
 
-        if (counterGet == null) {
-            counterGet = 0;
-        }
-
-
-        String increment = request.getParameter("inc");
-        if (increment != null) {
-            counterGet ++;
-        }
+        counterGet = getInteger(request, counterGet);
         request.getSession().setAttribute("CounterGetName", counterGet);
         status(request, response);
     }
@@ -34,15 +26,29 @@ public class CounterServlet extends HttpServlet {
             throws ServletException, IOException {
         Integer counterPost = (Integer)
                 request.getSession().getAttribute("CounterPostName");
+        counterPost = getInteger(request, counterPost);
+
+        request.getSession().setAttribute("CounterPostName", counterPost);
+        status(request, response);
+    }
+
+    private Integer getInteger(HttpServletRequest request, Integer counterPost) {
         if (counterPost == null) {
             counterPost = 0;
         }
+
+
         String increment = request.getParameter("inc");
-        if (increment != null) {
-            counterPost ++;
+        if (increment != null && !increment.isEmpty()) {
+            counterPost += Integer.parseInt(increment);
         }
-        request.getSession().setAttribute("CounterPostName", counterPost);
-        status(request, response);
+
+
+        String decrement = request.getParameter("dec");
+        if (decrement != null && !decrement.isEmpty()) {
+            counterPost -= Integer.parseInt(decrement);
+        }
+        return counterPost;
     }
 
 
