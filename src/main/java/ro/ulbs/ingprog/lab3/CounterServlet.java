@@ -13,22 +13,36 @@ public class CounterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        Integer counterGet = (Integer)
-                request.getSession().getAttribute("CounterGetName");
+        Integer counterGet = (Integer) request.getSession().getAttribute("CounterGetName");
 
         counterGet = getInteger(request, counterGet);
         request.getSession().setAttribute("CounterGetName", counterGet);
+
+
+        if (counterGet == 0) {
+            request.getSession().setAttribute("WarningGet", true);
+        } else {
+            request.getSession().removeAttribute("WarningGet");
+        }
+
         status(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer counterPost = (Integer)
-                request.getSession().getAttribute("CounterPostName");
-        counterPost = getInteger(request, counterPost);
+        Integer counterPost = (Integer) request.getSession().getAttribute("CounterPostName");
 
+
+        counterPost = getInteger(request, counterPost);
         request.getSession().setAttribute("CounterPostName", counterPost);
+        if (counterPost == 0) {
+
+            request.getSession().setAttribute("WarningPost", true);
+        } else {
+            request.getSession().removeAttribute("WarningPost");
+        }
+
         status(request, response);
     }
 
@@ -65,6 +79,15 @@ public class CounterServlet extends HttpServlet {
         Integer counterPost = (Integer)
                 request.getSession().getAttribute("CounterPostName");
         printWriter.println("<br> Counter for POST: " + counterPost);
+
+
+        if (request.getSession().getAttribute("WarningGet") != null) {
+            printWriter.println("<br><strong style='color:red;'>WARNING GET</strong>");
+        }
+
+        if (request.getSession().getAttribute("WarningPost") != null) {
+            printWriter.println("<br><strong style='color:red;'>WARNING POST</strong>");
+        }
     }
 
 
